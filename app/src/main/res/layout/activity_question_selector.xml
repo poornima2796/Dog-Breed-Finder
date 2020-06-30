@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".QuestionSelector">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            app:srcCompat="@drawable/logo" />
+
+        <TextView
+            android:id="@+id/S"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:fontFamily="@font/montserrat"
+            android:gravity="center"
+            android:text="@string/info_txt"
+            android:textColor="#050505"
+            android:textSize="18sp" />
+
+        <com.jem.rubberpicker.RubberSeekBar
+
+            android:id="@+id/rubberSeekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            app:dampingRatio="0.3"
+            app:defaultThumbInsideColor="#FFF"
+            app:defaultThumbRadius="16dp"
+            app:elasticBehavior="cubic"
+            app:highlightDefaultThumbOnTouchColor="#CD5D67"
+            app:highlightTrackColor="#3B6189"
+            app:highlightTrackWidth="4dp"
+            app:maxValue="10"
+            app:minValue="1"
+            app:normalTrackColor="#AAAAAA"
+            app:normalTrackWidth="2dp"
+            app:stiffness="300"
+            app:stretchRange="44dp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="30dp">
+
+            <TextView
+                android:id="@+id/selectedTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/btn_question_selector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/ovalbtn"
+            android:capitalize="none"
+            android:elevation="30dp"
+            android:fontFamily="@font/montserrat"
+            android:padding="20dp"
+            android:text="Let's Go!"
+            android:textAllCaps="false"
+            android:textColor="#F4F0F0"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+
+</ScrollView>

@@ -1,60 +1,58 @@
 package com.poorni.breedfinder
 
-import com.poorni.breedfinder.R
-import com.poorni.breedfinder.WebServices
+import android.annotation.SuppressLint
+import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
+import android.graphics.ImageDecoder
+import android.graphics.drawable.AnimatedImageDrawable
 import android.os.AsyncTask
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import coil.api.load
-import coil.transform.CircleCropTransformation
+import com.poorni.breedfinder.Model.BreedObj
+import com.poorni.breedfinder.Services.WebServices
+import kotlinx.android.synthetic.main.activity_random_dog.*
+import kotlinx.android.synthetic.main.activity_splash.*
 import org.json.JSONException
-import com.poorni.breedfinder.BreedObj
 import org.json.JSONObject
 
-class QuizActivity : AppCompatActivity() {
+class RandomDog : AppCompatActivity() {
 
     var img_dog: ImageView? = null
-    var editText_breed_name: EditText? = null
-    var btn_submit: Button? = null
     var dogObj: BreedObj? = null
+    var context: Context? = null
 
-
+    @SuppressLint("WrongThread")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_quiz)
+        setContentView(R.layout.activity_random_dog)
+        context = this;
         val getDetails = getDetails()
         getDetails.execute()
-        img_dog = findViewById<View>(R.id.imageView4) as ImageView
-        editText_breed_name = findViewById<View>(R.id.name_txt) as EditText
+        img_dog = findViewById<View>(R.id.dog_img) as ImageView
+       btn_guess.setOnClickListener {
 
-        btn_submit = findViewById<View>(R.id.btn_submit) as Button
-        btn_submit!!.setOnClickListener {
-
-            checkResults()
+           val getDetails = getDetails()
+           getDetails.execute()
         }
+
+        btn_quit.setOnClickListener {
+            val intent = Intent(this@RandomDog, HomeActivity::class.java)
+            startActivity(intent)
+            this.finish()
+        }
+
     }
 
-    fun checkResults(){
-        val breed = editText_breed_name?.text
-
-        if(breed!=null){
-            if(breed.equals(dogObj?.breed)){
-                Log.d("RES---", "Match")
-            } else{
-                Log.d("RES---", "no match-----"+dogObj?.breed + "-------"+breed)
-            }
-        }
-    }
 
     private inner class getDetails :
         AsyncTask<Void?, Void?, String>() {
-
 
 
 
@@ -65,13 +63,15 @@ class QuizActivity : AppCompatActivity() {
         override fun onPostExecute(result: String) {
 
             Log.d("RES---", result)
+
             dogObj= dispResults(result)
             img_dog?.load(dogObj?.img) {
                 crossfade(true)
-                placeholder(R.drawable.logo)
+                placeholder(R.drawable.loading)
                 transformations()
             }
 
+            dog_name_txt.text = dogObj!!.breed.split(' ','-').joinToString(" ") { it.capitalize() }
 
         }
     }
@@ -85,7 +85,8 @@ class QuizActivity : AppCompatActivity() {
         val status = jsonObject.getString("status")
         val dog = img.split("https://images.dog.ceo/breeds/", "/")
 
-        var breedObj:BreedObj= BreedObj(img, dog[1], status);
+        var breedObj: BreedObj =
+            BreedObj(img, dog[1], "", "");
 
         return breedObj;
 
